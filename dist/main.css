@@ -1,0 +1,43 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0; 
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+    height: 50px;
+}
+
+.card-icon {
+    height: 80px;
+}
+
+.grey-icon {
+    filter: grayscale(1);
+}
+
+.card_validation_form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+}
+
+.card_number {
+    height: 30px;
+    margin-right: 10px;
+}
+
+.validation_button {
+    background-color: green;
+    color: white;
+    font-size: 16px;
+    border: 0;
+    border-radius: 8px;
+    padding: 10px 24px;
+}
+
