@@ -1,31 +1,43 @@
 import './index.css';
-const formEl = document.querySelector('.card_validation_form');
-const inputEl = document.querySelector('.card_number');
+const tmpl = '<form class="card_validation_form"><input class="card_number" type="text" placeholder="Enter your card ID" maxlength="16" autofocus> <button class="validation_button">Click to Validate</button></form>';
 
-inputEl.addEventListener('input', checkCardSystem);
-inputEl.addEventListener('paste', checkCardSystem);
-formEl.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const cardNumber = inputEl.value;
-    const result = validateCardNumber(cardNumber);
-    if (result.success) {
-        alert(result.message)
-    }
-});
+init();
 
-function checkCardSystem() {
-    const cardNumber = inputEl.value;
-    const cardSystem = getCardSystem(cardNumber);
-    const cardIconsEl = Array.from(document.querySelectorAll('.card-icon'));
-    for (let cardIconEl of cardIconsEl) {
-        if (cardIconEl.classList.contains(cardSystem)) {
-            cardIconEl.classList.toggle('grey-icon');
-            console.log(cardIconEl)
-        } else {
-            cardIconEl.classList.add('grey-icon');
+function init() {
+    const divEl = document.createElement('div');
+    divEl.innerHTML = tmpl;
+    const formEl = divEl.querySelector('.card_validation_form');
+    const inputEl = divEl.querySelector('.card_number');
+
+    function checkCardSystem() {
+        const cardNumber = inputEl.value;
+        const cardSystem = getCardSystem(cardNumber);
+        const cardIconsEl = Array.from(document.querySelectorAll('.card-icon'));
+        for (let cardIconEl of cardIconsEl) {
+            if (cardIconEl.classList.contains(cardSystem)) {
+                cardIconEl.classList.toggle('grey-icon');
+                console.log(cardIconEl)
+            } else {
+                cardIconEl.classList.add('grey-icon');
+            }
+        }
+    };    
+
+    function checkValidity(event) {
+        event.preventDefault();
+        const cardNumber = inputEl.value;
+        const result = validateCardNumber(cardNumber);
+        if (result.success) {
+            alert(result.message)
         }
     }
-};    
+
+    inputEl.addEventListener('input', checkCardSystem);
+    inputEl.addEventListener('paste', checkCardSystem);
+    formEl.addEventListener('submit', checkValidity);
+    const main = document.querySelector('.main');
+    main.appendChild(divEl);
+} 
 
 function getCardSystem(cardNumber) {
     cardNumber.split("");
